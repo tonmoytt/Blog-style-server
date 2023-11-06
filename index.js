@@ -10,11 +10,6 @@ const port = process.env.PORT || 5000
 // middelware
 app.use(cors())
 app.use(express.json())
- 
-
-
-
-
 
 
 
@@ -36,8 +31,15 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
+        const database = client.db("Blog").collection("blog user");
 
+      
 
+        app.get('/users', async (req, res) => {
+            const cursor = database.find();
+            const result = await cursor.toArray()
+            res.send(result)
+        })
 
 
         // Send a ping to confirm a successful connection
