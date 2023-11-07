@@ -40,7 +40,17 @@ async function run() {
         const result = await wishlistdatabase.insertOne(body);
         res.send(result)
     })
+    //  clickdetials pages wishlist then post be go to database// 
+    app.post('/wishlist' ,async(req,res) =>{
+        const body=req.body
+        const result = await wishlistdatabase.insertOne(body);
+        res.send(result)
+    })
 
+
+
+
+    
         app.get('/users', async (req, res) => {
             const cursor = database.find();
             const result = await cursor.toArray()
