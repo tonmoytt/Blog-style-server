@@ -46,7 +46,12 @@ async function run() {
             const result = await wishlistdatabase.insertOne(body);
             res.send(result)
         })
-
+        // get data in server at wishlist  from database//
+        app.get('/wishlist', async (req, res) => {
+            const cursor = wishlistdatabase.find();
+            const result = await cursor.toArray()
+            res.send(result)
+        })
 
 
 
@@ -61,7 +66,7 @@ async function run() {
 
         app.post('/users', async (req, res) => {
             const body = req.body
-            const result = await  database.insertOne(body);
+            const result = await database.insertOne(body);
             res.send(result)
         })
 
