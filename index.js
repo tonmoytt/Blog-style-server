@@ -32,8 +32,14 @@ async function run() {
         await client.connect();
 
         const database = client.db("Blog").collection("blog user");
+        const wishlistdatabase = client.db("wishlist").collection("wishlist user");
 
-      
+    //   wishlist//
+    app.post('/wishlist' ,async(req,res) =>{
+        const body=req.body
+        const result = await wishlistdatabase.insertOne(body);
+        res.send(result)
+    })
 
         app.get('/users', async (req, res) => {
             const cursor = database.find();
