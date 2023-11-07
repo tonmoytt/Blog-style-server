@@ -34,28 +34,37 @@ async function run() {
         const database = client.db("Blog").collection("blog user");
         const wishlistdatabase = client.db("wishlist").collection("wishlist user");
 
-    //   wishlist//
-    app.post('/wishlist' ,async(req,res) =>{
-        const body=req.body
-        const result = await wishlistdatabase.insertOne(body);
-        res.send(result)
-    })
-    //  clickdetials pages wishlist then post be go to database// 
-    app.post('/wishlist' ,async(req,res) =>{
-        const body=req.body
-        const result = await wishlistdatabase.insertOne(body);
-        res.send(result)
-    })
+        //   wishlist//
+        app.post('/wishlist', async (req, res) => {
+            const body = req.body
+            const result = await wishlistdatabase.insertOne(body);
+            res.send(result)
+        })
+        //  clickdetials pages wishlist then post be go to database// 
+        app.post('/wishlist', async (req, res) => {
+            const body = req.body
+            const result = await wishlistdatabase.insertOne(body);
+            res.send(result)
+        })
 
 
 
 
-    
+
         app.get('/users', async (req, res) => {
             const cursor = database.find();
             const result = await cursor.toArray()
             res.send(result)
         })
+
+        // post from addblog link//
+
+        app.post('/users', async (req, res) => {
+            const body = req.body
+            const result = await  database.insertOne(body);
+            res.send(result)
+        })
+
 
 
         // Send a ping to confirm a successful connection
