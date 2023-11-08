@@ -34,8 +34,9 @@ async function run() {
         const database = client.db("Blog").collection("blog user");
         const wishlistdatabase = client.db("wishlist").collection("wishlist user");
         const commenttdatabase = client.db("comment").collection("comment user");
-        // commnet post data//
 
+
+        // commnet post data//
         app.post('/comment', async (req, res) => {
             const body = req.body
             const result = await commenttdatabase.insertOne(body);
@@ -43,7 +44,7 @@ async function run() {
         })
 
 
-        // get data from commentdatabase//
+        // get data in server at comment  from commentdatabase//
         app.get('/comment', async (req, res) => {
             const cursor = commenttdatabase.find();
             const result = await cursor.toArray()
@@ -56,12 +57,8 @@ async function run() {
             const result = await wishlistdatabase.insertOne(body);
             res.send(result)
         })
-        //  clickdetials pages wishlist then post be go to database// 
-        // app.post('/wishlist', async (req, res) => {
-        //     const body = req.body
-        //     const result = await wishlistdatabase.insertOne(body);
-        //     res.send(result)
-        // })
+
+
         // get data in server at wishlist  from database//
         app.get('/wishlist', async (req, res) => {
             const cursor = wishlistdatabase.find();
@@ -69,8 +66,7 @@ async function run() {
             res.send(result)
         })
 
-        // deleted from dwishlist//
-
+        // deleted from wishlist//
         app.delete('/wishlist/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) };
@@ -78,14 +74,14 @@ async function run() {
             res.send(result)
         })
 
-        // all blog user data get//
+        // get all blog user alldata database//
         app.get('/users', async (req, res) => {
             const cursor = database.find();
             const result = await cursor.toArray()
             res.send(result)
         })
 
-        // post from addblog link//
+        // by addblog post in allblog database//
 
         app.post('/users', async (req, res) => {
             const body = req.body
