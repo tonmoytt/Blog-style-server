@@ -51,6 +51,22 @@ async function run() {
             res.send(result)
         })
 
+        // update commented user//
+        app.put('/confirm/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const updateBody = req.body
+            console.log(updateBody);
+            const updateMal = {
+                $set: {
+                    status: updateBody.status
+
+                },
+            };
+            const result = await Orderdatabase.updateOne(filter, updateMal);
+            res.send(result);
+        })
+
         //   wishlist//
         app.post('/wishlist', async (req, res) => {
             const body = req.body
