@@ -30,7 +30,8 @@ async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
-
+        // const databaseSample = client.db("blogDB");
+        // const testCollection = databaseSample.collection("testComments")
         const database = client.db("Blog").collection("blog user");
         const wishlistdatabase = client.db("wishlist").collection("wishlist user");
         const commenttdatabase = client.db("comment").collection("comment user");
@@ -50,23 +51,29 @@ async function run() {
             const result = await cursor.toArray()
             res.send(result)
         })
-
-        // update commented user//
-        app.put('/confirm/:id', async (req, res) => {
-            const id = req.params.id;
-            const filter = { _id: new ObjectId(id) };
-            const updateBody = req.body
-            console.log(updateBody);
-            const updateMal = {
+        app.get('/comment/:id',async (req,res) =>{
+            const id =req.params.id;
+            const cursor={_id: new ObjectId(id)}
+            const result= await commenttdatabase.findOne(cursor)
+            res.send(result)
+        })
+        
+   // update commented user//
+        app.patch("/updateComment/:commentId", async(req, res)=> {
+            const commentId = req.params.commentId;
+            const comment = req.body;
+            const updatedComment = {
                 $set: {
-                    status: updateBody.status
-
-                },
-            };
-            const result = await Orderdatabase.updateOne(filter, updateMal);
-            res.send(result);
+                    ...comment
+                }
+            }
+            const filter = {_id: new ObjectId(commentId)}
+            const result = await commenttdatabase.updateOne(filter, updatedComment);
+            res.send(result)
         })
 
+     
+         
         //   wishlist//
         app.post('/wishlist', async (req, res) => {
             const body = req.body
@@ -85,7 +92,7 @@ async function run() {
         // deleted from wishlist//
         app.delete('/wishlist/:id', async (req, res) => {
             const id = req.params.id
-            const query = { _id: new ObjectId(id) };
+            const query = { _id: id };
             const result = await wishlistdatabase.deleteOne(query);
             res.send(result)
         })
